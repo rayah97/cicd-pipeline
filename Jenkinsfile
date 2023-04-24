@@ -7,9 +7,9 @@ pipeline {
       }
     }
 
-    stage('') {
+    stage('Build') {
       steps {
-        sh '''scripts/test.sh
+        sh '''scripts/build.sh
 '''
       }
     }
