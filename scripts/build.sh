@@ -1,2 +1,2 @@
 #!/bin/bash
-/usr/bin/npm install
+npm install
