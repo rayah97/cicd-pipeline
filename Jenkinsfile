@@ -9,9 +9,9 @@ pipeline {
 
     stage('Build') {
       steps {
-        sh '''chmod +x scripts/build.sh
-sh \'scripts/build.sh\'
-'''
+        sh '''echo $PATH
+node --version
+npm --version'''
       }
     }
 
