@@ -7,14 +7,5 @@ pipeline {
       }
     }
 
-    stage('Build image') {
-      steps {
-        script {
-          sh 'docker build -t myapp .'
-        }
-
-      }
-    }
-
   }
 }
