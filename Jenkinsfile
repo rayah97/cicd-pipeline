@@ -9,9 +9,9 @@ pipeline {
 
     stage('Build') {
       steps {
-        sh '''sh \'curl -sL https://deb.nodesource.com/setup_lts.x | bash -\'
-sh \'apt-get install -y nodejs\'
-sh \'npm install -g npm@latest\''''
+        sh '''sh \'curl -sL "https://deb.nodesource.com/setup_lts.x" | sudo -E bash -\'
+sh \'sudo apt-get install -y nodejs\'
+sh \'sudo npm install -g npm@latest\''''
       }
     }
 
