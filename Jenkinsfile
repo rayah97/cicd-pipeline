@@ -7,10 +7,12 @@ pipeline {
       }
     }
 
-    stage('Build Image') {
+    stage('Build image') {
       steps {
-        sh '''docker build -t imagefromraya .
-'''
+        script {
+          sh 'docker build -t myapp .'
+        }
+
       }
     }
 
