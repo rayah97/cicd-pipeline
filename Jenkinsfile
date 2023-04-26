@@ -9,7 +9,7 @@ pipeline {
 
     stage('Build app') {
       steps {
-        sh '''echo $PATH
+        sh '''export PATH=/opt/homebrew/bin:$PATH
 chmod a+x scripts/build.sh
 scripts/build.sh'''
       }
