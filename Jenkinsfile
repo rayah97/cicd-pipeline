@@ -14,5 +14,12 @@ scripts/build.sh'''
       }
     }
 
+    stage('Run tests') {
+      steps {
+        sh '''chmod a+x scripts/test.sh
+scripts/test.sh'''
+      }
+    }
+
   }
 }
