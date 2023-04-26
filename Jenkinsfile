@@ -9,7 +9,8 @@ pipeline {
 
     stage('Build app') {
       steps {
-        sh '''chmod a+x scripts/build.sh
+        sh '''/opt/homebrew/bin/npm install
+chmod a+x scripts/build.sh
 scripts/build.sh'''
       }
     }
