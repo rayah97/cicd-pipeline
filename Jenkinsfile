@@ -21,5 +21,12 @@ scripts/test.sh'''
       }
     }
 
+    stage('Build Docker Image') {
+      steps {
+        sh '''docker build -t rayasimage .
+'''
+      }
+    }
+
   }
 }
