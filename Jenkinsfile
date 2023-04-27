@@ -33,7 +33,7 @@ docker build -t rayasimage .
 
     stage('Push to Docker Hub') {
       steps {
-        withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USERNAME')]) {
+        withCredentials(bindings: [usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USERNAME')]) {
           script {
             docker.withRegistry('https://registry.dockerhub.com', 'dockerhub') {
               def app = docker.build('rayasimage')
@@ -41,7 +41,9 @@ docker build -t rayasimage .
               app.push("latest")
             }
           }
+
         }
+
       }
     }
 
