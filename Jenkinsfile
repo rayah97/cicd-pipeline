@@ -31,7 +31,7 @@ pipeline {
       steps {
         withCredentials(bindings: [usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
           sh "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
-          sh 'docker tag rayasimage rayahh/my-image:latest'
+          sh 'docker tag rayasimage rayahh/jenkinspractice:latest'
           sh 'docker push rayahh/jenkinspractice:latest'
         }
 
