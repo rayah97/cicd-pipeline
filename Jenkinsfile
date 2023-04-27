@@ -48,8 +48,8 @@ docker build -t rayasimage .
             sh 'export PATH=$PATH:/usr/local/bin'
 
             docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
-            docker tag rayasimage $DOCKERHUB_USERNAME/rayasimage:$BUILD_NUMBER
-            docker push $DOCKERHUB_USERNAME/rayasimage:$BUILD_NUMBER
+            docker tag rayasimage $DOCKERHUB_USERNAME/rayasimage:latest
+            docker push $DOCKERHUB_USERNAME/rayasimage:latest
           }
         }
       }
