@@ -45,6 +45,10 @@ docker build -t rayasimage .
     stage('Push') {
       parallel {
         stage('Push') {
+          agent any
+          environment {
+            PATH = '$PATH:/usr/local/bin'
+          }
           steps {
             script {
               withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
