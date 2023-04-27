@@ -39,4 +39,7 @@ pipeline {
     }
 
   }
+  environment {
+    PATH = "/opt/homebrew/bin:/usr/local/bin:$PATH"
+  }
 }
