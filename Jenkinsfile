@@ -46,13 +46,15 @@ docker build -t rayasimage .
       steps {
         withCredentials(bindings: [usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USERNAME')]) {
           script {
+
             sh 'export PATH=$PATH:/usr/local/bin'
 
-            docker.withRegistry('https://registry.hub.docker.com/', 'dockerhub') {
+            docker.withRegistry('', 'dockerhub') {
               def image = docker.image('rayasimage')
               image.tag("${env.BUILD_NUMBER}")
               image.push('latest')
             }
+
           }
 
         }
