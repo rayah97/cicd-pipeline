@@ -51,5 +51,6 @@ pipeline {
   }
   environment {
     registry = 'rayahh/jenkinspractice'
+    PATH = "/opt/homebrew/bin:/usr/local/bin:$PATH"
   }
 }
