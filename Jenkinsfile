@@ -31,5 +31,16 @@ docker build -t rayasimage .
       }
     }
 
+    stage('Push docker image') {
+      steps {
+        script {
+          docker.withRegistry('https://registry.docker.com', 'dockerhub') {
+            def app = docker.image('rayasimage').push('latest')
+          }
+        }
+
+      }
+    }
+
   }
 }
