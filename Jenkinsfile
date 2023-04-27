@@ -6,51 +6,34 @@ pipeline {
         git(url: 'https://github.com/rayah97/cicd-pipeline', branch: 'main')
       }
     }
-
     stage('Build Application') {
       steps {
         sh 'chmod a+x scripts/build.sh'
         sh 'scripts/build.sh'
       }
     }
-
     stage('Test Application') {
       steps {
         sh 'chmod a+x scripts/test.sh'
         sh 'scripts/test.sh'
       }
     }
-
-    stage('Image Build') {
-      steps {
-        script {
-          def customImage = docker.build("${registry}:${env.BUILD_ID}")
-        }
-
-      }
-    }
-
     stage('Build Docker Image') {
       steps {
-        sh 'docker build -t rayasimage .'
+        sh 'docker build -t jenkinsraya .'
       }
     }
-
-    stage('Push Image') {
+    stage('Push Docker Image') {
       steps {
-        script {
-          docker.withRegistry('', 'dockerhub') {
-            docker.image("${registry}:${env.BUILD_ID}").push('latest')
-            docker.image("${registry}:${env.BUILD_ID}").push("${env.BUILD_ID}")
-          }
+        withCredentials(bindings: [usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+          sh "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
+          sh 'docker tag rayasimage rayahh/my-image:latest'
+          sh 'docker push rayahh/jenkinspractice:latest'
         }
-
       }
     }
-
   }
   environment {
-    registry = 'rayahh/jenkinspractice'
     PATH = "/opt/homebrew/bin:/usr/local/bin:$PATH"
   }
 }
