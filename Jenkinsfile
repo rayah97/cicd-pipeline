@@ -36,6 +36,7 @@ docker build -t rayasimage .
         withCredentials(bindings: [usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USERNAME')]) {
           script {
             withCredentials([dockerLogin(credentialsId: 'dockerhub', url: 'https://hub.docker.com/')]) {
+              sh 'export PATH=$PATH:/usr/local/bin'
               sh 'docker push rayasimage:latest'
             }
           }
