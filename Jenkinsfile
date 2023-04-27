@@ -1,5 +1,8 @@
 pipeline {
   agent any
+  environment {
+    PATH = "/opt/homebrew/bin:/usr/local/bin:$PATH"
+  }
   stages {
     stage('Git Checkout') {
       parallel {
@@ -9,51 +12,42 @@ pipeline {
           }
         }
 
-        stage('usercheck') {
+        stage('User Check') {
           steps {
             sh 'whoami'
           }
         }
-
       }
     }
 
-    stage('Build app') {
+    stage('Build App') {
       steps {
-        sh '''export PATH=/opt/homebrew/bin:$PATH
-chmod a+x scripts/build.sh
-scripts/build.sh'''
+        sh 'chmod a+x scripts/build.sh'
+        sh 'scripts/build.sh'
       }
     }
 
-    stage('Run tests') {
+    stage('Run Tests') {
       steps {
-        sh '''export PATH=/opt/homebrew/bin:$PATH
-chmod a+x scripts/test.sh
-scripts/test.sh'''
+        sh 'chmod a+x scripts/test.sh'
+        sh 'scripts/test.sh'
       }
     }
 
     stage('Build Docker Image') {
       steps {
-        sh '''export PATH=$PATH:/usr/local/bin
-docker build -t rayasimage .
-'''
+        sh 'docker build -t rayasimage .'
       }
     }
 
     stage('Push Docker') {
       steps {
-        script {
-          withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-            sh'export PATH=$PATH:/usr/local/bin'
-            sh "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"}
-            sh 'docker tag rayasimage rayahh/my-image:latest'
-            sh 'docker push rayahh/my-image:latest'
-          }
-
+        withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+          sh "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
+          sh 'docker tag rayasimage rayahh/my-image:latest'
+          sh 'docker push rayahh/my-image:latest'
         }
       }
-
     }
   }
+}
