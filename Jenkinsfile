@@ -47,8 +47,9 @@ docker build -t rayasimage .
         stage('Push') {
           steps {
             script {
-              sh'export PATH=$PATH:/usr/local/bin'
+
               withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                sh'export PATH=$PATH:/usr/local/bin'
                 sh "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"}
                 sh 'docker tag rayasimage rayahh/my-image:latest'
                 sh 'docker push rayahh/my-image:latest'
