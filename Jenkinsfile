@@ -3,31 +3,34 @@ pipeline {
   stages {
     stage('Git Checkout') {
       steps {
-        script {
-          checkout scm
-        }
-
+        git(url: 'https://github.com/rayah97/cicd-pipeline', branch: 'main')
       }
     }
 
-    stage('Application Build') {
+    stage('Build Application') {
       steps {
-        sh 'script scripts/build.sh'
+        sh 'chmod a+x scripts/build.sh'
+        sh 'scripts/build.sh'
       }
     }
 
-    stage('Tests') {
+    stage('Test Application') {
       steps {
-        sh 'script scripts/test.sh'
+        sh 'chmod a+x scripts/test.sh'
+        sh 'scripts/test.sh'
       }
     }
-
     stage('Image Build') {
       steps {
         script {
           def customImage = docker.build("${registry}:${env.BUILD_ID}")
         }
 
+      }
+    }
+    stage('Build Docker Image') {
+      steps {
+        sh 'docker build -t rayasimage .'
       }
     }
 
@@ -44,8 +47,7 @@ pipeline {
     }
 
   }
-
   environment {
-    registry = 'alextrubkindocker/jenkins_practice'
+    registry = 'rayahh/jenkinspractice'
   }
 }
