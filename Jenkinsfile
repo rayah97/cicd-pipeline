@@ -42,29 +42,14 @@ docker build -t rayasimage .
       }
     }
 
-    stage('Push') {
-      parallel {
-        stage('Push') {
-          agent any
-          environment {
-            PATH = '$PATH:/usr/local/bin'
-          }
-          steps {
-            script {
-              withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                sh'export PATH=$PATH:/usr/local/bin'
-                sh "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"}
-                sh 'docker tag rayasimage rayahh/my-image:latest'
-                sh 'docker push rayahh/my-image:latest'
-              }
-
-            }
-          }
-
-          stage('docker') {
-            steps {
-              sh 'which docker'
-            }
+    stage('Push Docker') {
+      steps {
+        script {
+          withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+            sh'export PATH=$PATH:/usr/local/bin'
+            sh "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"}
+            sh 'docker tag rayasimage rayahh/my-image:latest'
+            sh 'docker push rayahh/my-image:latest'
           }
 
         }
