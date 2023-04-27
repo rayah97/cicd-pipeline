@@ -1,8 +1,5 @@
 pipeline {
   agent any
-  environment {
-    PATH = "/opt/homebrew/bin:/usr/local/bin:$PATH"
-  }
   stages {
     stage('Git Checkout') {
       parallel {
@@ -37,12 +34,17 @@ pipeline {
 
     stage('Push Docker') {
       steps {
-        withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+        withCredentials(bindings: [usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
           sh "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
           sh 'docker tag rayasimage rayahh/my-image:latest'
           sh 'docker push rayahh/my-image:latest'
         }
+
       }
     }
+
+  }
+  environment {
+    PATH = "/opt/homebrew/bin:/usr/local/bin:$PATH"
   }
 }
