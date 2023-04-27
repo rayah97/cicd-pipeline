@@ -17,7 +17,8 @@ scripts/build.sh'''
 
     stage('Run tests') {
       steps {
-        sh '''chmod a+x scripts/test.sh
+        sh '''export PATH=/opt/homebrew/bin:$PATH
+chmod a+x scripts/test.sh
 scripts/test.sh'''
       }
     }
