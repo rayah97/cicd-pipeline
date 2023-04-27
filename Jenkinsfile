@@ -20,6 +20,7 @@ pipeline {
         sh 'scripts/test.sh'
       }
     }
+
     stage('Image Build') {
       steps {
         script {
@@ -28,6 +29,7 @@ pipeline {
 
       }
     }
+
     stage('Build Docker Image') {
       steps {
         sh 'docker build -t rayasimage .'
