@@ -42,5 +42,5 @@ docker build -t rayasimage .
     }
 
   }
-  }
+
 }
