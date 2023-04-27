@@ -14,6 +14,7 @@ pipeline {
             sh 'whoami'
           }
         }
+
       }
     }
 
@@ -40,5 +41,19 @@ docker build -t rayasimage .
 '''
       }
     }
+
+    stage('Push') {
+      steps {
+        script {
+          withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'rayahh', passwordVariable: 'Raya.199727')]) {
+            sh "docker login -u $rayahh -p $Raya.199727"
+          }
+          sh 'docker tag rayasimage rayahh/my-image:latest'
+          sh 'docker push rayahh/my-image:latest'
+        }
+
+      }
+    }
+
   }
 }
