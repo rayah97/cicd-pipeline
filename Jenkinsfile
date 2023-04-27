@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Git Checkout') {
       parallel {
-        stage('Git Checkout') {
+        stage('Checkout Code') {
           steps {
             git(url: 'https://github.com/rayah97/cicd-pipeline', branch: 'main')
           }
@@ -12,14 +12,14 @@ pipeline {
       }
     }
 
-    stage('Build App') {
+    stage('Build Application') {
       steps {
         sh 'chmod a+x scripts/build.sh'
         sh 'scripts/build.sh'
       }
     }
 
-    stage('Run Tests') {
+    stage('Test Application') {
       steps {
         sh 'chmod a+x scripts/test.sh'
         sh 'scripts/test.sh'
@@ -32,7 +32,7 @@ pipeline {
       }
     }
 
-    stage('Push Docker') {
+    stage('Push Docker Image') {
       steps {
         withCredentials(bindings: [usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
           sh "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
