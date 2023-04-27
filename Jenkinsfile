@@ -48,7 +48,7 @@ docker build -t rayasimage .
           script {
             sh 'export PATH=$PATH:/usr/local/bin'
 
-            docker.withRegistry('', 'dockerhub') {
+            docker.withRegistry('https://registry.hub.docker.com/', 'dockerhub') {
               def image = docker.image('rayasimage')
               image.tag("${env.BUILD_NUMBER}")
               image.push('latest')
