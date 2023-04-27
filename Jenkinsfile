@@ -44,14 +44,13 @@ docker build -t rayasimage .
 
     stage('Push to Docker Hub') {
       steps {
-        withCredentials(bindings: [usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USERNAME')]) {
+        withCredentials(bindings: [usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'Raya.199727', usernameVariable: 'rayahh')]) {
           script {
-            sh 'export PATH=$PATH:/usr/local/bin'
+             sh 'export PATH=$PATH:/usr/local/bin'
 
-            docker.withRegistry('', 'dockerhub') {
-              def image = docker.image('rayasimage')
-              image.tag("${env.BUILD_NUMBER}")
-              image.push('latest')
+            docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+            docker tag rayasimage $DOCKERHUB_USERNAME/rayasimage:$BUILD_NUMBER
+           docker push $DOCKERHUB_USERNAME/rayasimage:$BUILD_NUMBER
             }
           }
 
