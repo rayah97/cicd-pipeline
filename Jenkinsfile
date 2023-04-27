@@ -25,7 +25,8 @@ scripts/test.sh'''
 
     stage('Build Docker Image') {
       steps {
-        sh '''docker build -t rayasimage .
+        sh '''export PATH=$PATH:/usr/local/bin
+docker build -t rayasimage .
 '''
       }
     }
