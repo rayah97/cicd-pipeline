@@ -31,13 +31,16 @@ docker build -t rayasimage .
       }
     }
 
-    stage('Push docker image') {
-      steps {
-        script {
-          docker.withRegistry('https://registry.docker.com', 'dockerhub') {
-            def app = docker.image('rayasimage').push('latest')
-          }
-        }
+  stage('Push to Docker Hub') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USERNAME')]) {
+                    script {
+                        docker.withRegistry('https://registry.dockerhub.com', 'dockerhub') {
+                            def app = docker.build('rayasimage')
+                            app.push("${env.BUILD_NUMBER}")
+                            app.push("latest")
+                        }
+                    }
 
       }
     }
