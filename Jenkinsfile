@@ -2,13 +2,8 @@ pipeline {
   agent any
   stages {
     stage('Git Checkout') {
-      parallel {
-        stage('Checkout Code') {
-          steps {
-            git(url: 'https://github.com/rayah97/cicd-pipeline', branch: 'main')
-          }
-        }
-
+      steps {
+        git(url: 'https://github.com/rayah97/cicd-pipeline', branch: 'main')
       }
     }
 
