@@ -35,6 +35,8 @@ docker build -t rayasimage .
       steps {
         withCredentials(bindings: [usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USERNAME')]) {
           script {
+            sh 'export PATH=$PATH:/usr/local/bin'
+
             docker.withRegistry('', 'dockerhub') {
               def image = docker.image('rayasimage')
               image.tag("${env.BUILD_NUMBER}")
